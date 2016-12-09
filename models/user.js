@@ -44,7 +44,7 @@ schema.methods.checkPassword = function (password) {
     return this.encryptPassword(password) === this.hashedPassword;
 };
 
-schema.statics.authorize = function (username, password, callback) {
+schema.statics.login = function (username, password, callback) {
     var User = this;
 
     async.waterfall([
@@ -56,7 +56,7 @@ schema.statics.authorize = function (username, password, callback) {
                 if (user.checkPassword(password)) {
                     callback(null, user);
                 } else {
-                    callback(new AuthError("Пароль неверен"));
+                    callback(new AuthError("Wrong password"));
                 }
             } else {
                 callback(new AuthError("No such user, please registry"));
