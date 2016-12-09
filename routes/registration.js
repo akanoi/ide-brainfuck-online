@@ -2,16 +2,18 @@ var User = require('../models/user').User;
 var HttpError = require('../error').HttpError;
 var AuthError = require('../models/user').AuthError;
 var async = require('async');
+var express = require('express');
+var router = express.Router();
 
-exports.get = function(req, res) {
+router.get('/', function (req, res) {
     res.render('registration');
-};
+});
 
-exports.post = function(req, res, next) {
+router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
 
-    User.registration(username, password, function(err, user) {
+    User.registration(username, password, function (err, user) {
         if (err) {
             if (err instanceof AuthError) {
                 return next(new HttpError(403, err.message));
@@ -23,4 +25,6 @@ exports.post = function(req, res, next) {
         res.send({});
 
     });
-};
+});
+
+module.exports = router;

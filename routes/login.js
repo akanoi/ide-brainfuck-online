@@ -2,12 +2,14 @@ var User = require('../models/user').User;
 var HttpError = require('../error').HttpError;
 var AuthError = require('../models/user').AuthError;
 var async = require('async');
+var express = require('express');
+var router = express.Router();
 
-exports.get = function(req, res) {
+router.get('/',function(req, res) {
     res.render('login');
-};
+});
 
-exports.post = function(req, res, next) {
+router.post('/', function (req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
 
@@ -22,4 +24,6 @@ exports.post = function(req, res, next) {
         req.session.user = user._id;
         res.send({});
     });
-};
+});
+
+module.exports = router;

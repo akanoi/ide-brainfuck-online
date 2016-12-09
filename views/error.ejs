@@ -1,3 +1,6 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<% layout('../layout/page') -%>
+<% block('title', error.message) -%>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<p class="col-lg-offset-2" style="padding-top: 50px">Sorry, error occured!</p>
+<p class="col-lg-offset-2"><%=error.message%></p>

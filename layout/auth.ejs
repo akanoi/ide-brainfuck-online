@@ -1,8 +1,10 @@
 <% layout('./page') %>
 
-<p class="col-lg-offset-2">Please enter toyr name and password to sign in.</p>
+<link rel='stylesheet' href='/stylesheets/auth.css' />
 
-<form class="form-horizontal login-form" name="login-form" style="padding-top: 50px">
+<p class="col-lg-offset-2">Please enter your name and password to sign in.</p>
+
+<form class="form-horizontal login-form" name="login-form">
     <div class="form-group">
         <label for="input-username" class="col-lg-2 control-label">Name</label>
 
@@ -18,7 +20,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-2">
+        <div class="col-lg-offset-2 col-lg-3">
             <button type="submit" class="btn btn-primary" data-loading-text="Sending..."><%=blocks.but%></button>
             <button type="reset" class="btn btn-default">Cancel</button>
             <span class="help-block error"></span>
@@ -42,8 +44,7 @@
             },
             statusCode: {
                 200: function() {
-                    form.html("Вы вошли в сайт").addClass('alert-success');
-                    window.location.href = "/brain";
+                    window.location.href = "/";
                 },
                 403: function(jqXHR) {
                     var error = JSON.parse(jqXHR.responseText);

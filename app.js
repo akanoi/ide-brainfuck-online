@@ -8,6 +8,7 @@ var config = require('./config');
 var mongoose = require('./libs/mongoose');
 var http = require('http');
 var log = require('./libs/log')(module);
+var HttpError = require('./error').HttpError;
 
 var app = express();
 
@@ -38,14 +39,17 @@ app.use(require('./middleware/sendHttpError'));
 app.use(require('./middleware/loadUser'));
 
 var index = require('./routes/index');
-var signin = require('./routes/signin');
 var ide = require('./routes/ide');
+var logout = require('./routes/logout');
+var login = require('./routes/login');
+var registration = require('./routes/registration');
 
 app.use('/', index);
 app.use('/home', index);
-app.use('/signin', signin);
 app.use('/ide', ide);
-
+app.use('/logout', logout);
+app.use('/login', login);
+app.use('/registration', registration);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -56,13 +60,22 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    if (typeof err == 'number') { // next(404);
+        err = new HttpError(err);
+    }
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    if (err instanceof HttpError) {
+        res.sendHttpError(err);
+    } else {
+        if (app.get('env') == 'development') {
+            var errorhandler = require('errorhandler');
+            errorhandler(err, req, res, next);
+        } else {
+            log.error(err);
+            err = new HttpError(500);
+            res.sendHttpError(err);
+        }
+    }
 });
 
 http.createServer(app).listen(config.get('port'), function () {
