@@ -23,13 +23,13 @@ var schema = new Schema({
     }
 });
 
-schema.statics.allUsersFiles = function(username, callback) {
+schema.statics.allUsersFiles = function (username, callback) {
     var File = this;
     async.waterfall([
-        function(callback) {
+        function (callback) {
             File.find({username: username}, callback);
         },
-        function(recordsByUser, callback) {
+        function (recordsByUser, callback) {
             if (recordsByUser) {
                 callback(recordsByUser);
             } else {
@@ -39,50 +39,60 @@ schema.statics.allUsersFiles = function(username, callback) {
     ], callback);
 };
 
-schema.statics.addFile = function(username, fileName, fileText, callback) {
+schema.statics.addFile = function (username, fileName, fileText, callback) {
     var File = this;
     async.waterfall([
-        function(callback) {
-            File.findOne({id: username+fileName}, callback);
+        function (callback) {
+            File.findOne({id: username + fileName}, callback);
         },
-        function(file, callback) {
+        function (file, callback) {
             if (file) {
                 File.remove(file, callback);
             }
-            var newFile = new File({id: username+fileName, username: username, fileName: fileName, fileText: fileText});
+            var newFile = new File({
+                id: username + fileName,
+                username: username,
+                fileName: fileName,
+                fileText: fileText
+            });
             newFile.save(callback);
         }
     ], callback);
 };
 
-schema.statics.deleteFile = function(username, fileName, callback) {
+schema.statics.deleteFile = function (username, fileName, callback) {
     var File = this;
     async.waterfall([
-        function(callback) {
-            File.findOne({id: username+fileName}, callback);
+        function (callback) {
+            File.findOne({id: username + fileName}, callback);
         },
-        function(file, callback) {
+        function (file, callback) {
             if (file)
                 File.remove(file, callback);
         }
     ], callback);
 };
 
-schema.statics.renameFile = function(username, newFileName, oldFileName, callback){
+schema.statics.renameFile = function (username, newFileName, oldFileName, callback) {
     var File = this;
     async.waterfall([
-        function(callback) {
-            File.findOne({id:username+newFileName}, callback);
+        function (callback) {
+            File.findOne({id: username + newFileName}, callback);
         },
-        function(file, callback) {
+        function (file, callback) {
             if (file) {
                 callback("error");
                 return;
             }
-            File.findOne({id:username+oldFileName}, callback);
+            File.findOne({id: username + oldFileName}, callback);
         },
-        function(file, callback) {
-            var newFile = new File({id:username+newFileName, username: username, fileName: newFileName, fileText: file.fileText});
+        function (file, callback) {
+            var newFile = new File({
+                id: username + newFileName,
+                username: username,
+                fileName: newFileName,
+                fileText: file.fileText
+            });
             File.remove(file, callback);
             newFile.save(callback);
         }

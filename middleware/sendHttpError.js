@@ -1,6 +1,6 @@
-module.exports = function(req, res, next) {
+module.exports = function (req, res, next) {
 
-    res.sendHttpError = function(error) {
+    res.sendHttpError = function (error) {
 
         res.status(error.status);
         if (res.req.headers['x-requested-with'] == 'XMLHttpRequest') {
