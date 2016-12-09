@@ -14,9 +14,8 @@
             <p class="navbar-text">Welcom, <%= user ? user.username : "guest"%>!</p>
             <ul class="nav navbar-nav navbar-right">
                 <% if (user) { %>
-                <li>
-                    <a href="/logout">Sign out</a>
-                </li>
+                <li><a href="/ide">IDE</a></li>
+                <li><a href="/logout">Sign out</a></li>
                 <% } else { %>
                 <li><a href="/registration" >Sign up</a></li>
                 <li><a href="/login" >Sign in</a></li>
