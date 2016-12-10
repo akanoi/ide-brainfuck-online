@@ -1,12 +1,12 @@
 <% layout('../layout/page') -%>
 <% block('title', "BrainFuck IDE") %>
 <!DOCTYPE html>
-<html>
+<html ng-app="ideApp">
 <head>
-    <!--<title><%= title %></title>-->
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/ide.css'/>
+    <script src="scripts/ideApp.js"></script>
 </head>
-<body>
+<body onload="init();" ng-controller="ideController">
 
 </body>
 </html>
