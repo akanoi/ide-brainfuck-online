@@ -39,6 +39,7 @@ app.controller("SourceFileListController", function ($http, $scope, SourceServic
         $scope.selected = Number.MAX_VALUE;
     };
 
+
     $scope.rename = function () {
         var file = SourceService.file;
         var newName = window.prompt("Enter new filename", file.stats.name);
@@ -50,6 +51,31 @@ app.controller("SourceFileListController", function ($http, $scope, SourceServic
             });
         }
     };
+
+
+    // $scope.new = function () {
+    //     var date = new Date();
+    //     var newFile = {
+    //         stats: {
+    //             name: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+    //         },
+    //         text: ''
+    //     };
+    //     SourceService.sourceFiles.push(newFile);
+    //     SourceService.file = newFile;
+    //     $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
+    // };
+    //
+    //
+    // $scope.save = function () {
+    //     SourceService.file.text = $('#edit-source').val();
+    //     $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
+    // };
+    //
+    //
+    // $scope.delete = function (file) {
+    //     $http.post('/delete', {fileName: file.stats.name, fileText: file.text});
+    // };
 
 
     $http.get('/files').then(function (response) {

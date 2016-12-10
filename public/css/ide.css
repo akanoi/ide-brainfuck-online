@@ -1,0 +1,69 @@
+.main {
+    display: flex;
+    padding-top: 80px;
+}
+
+.memory{
+    height: 400px;
+    width: 400px;
+    margin-left: 10px;
+}
+
+.code-unit {
+    height: 400px;
+    width: 800px;
+}
+
+.output {
+    height: 150px;
+    width: auto;
+    margin-top: 10px;
+}
+
+.files {
+    height: 400px;
+    width: 400px;
+    margin-right: 10px;
+}
+
+.code-area {
+    width: 100%;
+    height: 90%;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+}
+
+.memory, .output, .files, .code-unit {
+    border: dotted 2px;
+}
+
+.controls {
+    padding-bottom: 5px;
+    border-bottom: dotted 2px;
+    text-align: center;
+}
+
+.controls > a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.hint > p {
+    color: darkgrey;
+}
+
+pre {
+    height: 100%;
+}

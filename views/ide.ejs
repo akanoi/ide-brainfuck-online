@@ -1,12 +1,60 @@
 <% layout('../layout/page') -%>
 <% block('title', "BrainFuck IDE") %>
-<!DOCTYPE html>
-<html ng-app="ideApp">
-<head>
-    <link rel='stylesheet' href='/stylesheets/ide.css'/>
+<div onload="init();" ng-app="ideApp">
+    <link rel='stylesheet' href='/css/ide.css'/>
     <script src="scripts/ideApp.js"></script>
-</head>
-<body onload="init();" ng-controller="ideController">
+    <script src="scripts/sourcelist.js"></script>
+    <script src="scripts/source-service.js"></script>
+    <script src="scripts/drop-directive.js"></script>
+    <script src="scripts/interpreter/code.js"></script>
+    <script src="scripts/interpreter/infinityScroll.js"></script>
 
-</body>
-</html>
+
+    <div class="main" ng-controller="IdeAppController">
+        <div class="files" ng-controller="SourceFileListController">
+            <div class="controls">
+                <a class="new" ng-click="new()">[New]</a>
+                <a class="delete" ng-click="remove()">[Delete]</a>
+                <a class="save" ng-click="save()">[Save]</a>
+            </div>
+            <div class="content" drop-directive ng-repeat="file in sourceFiles">
+                <source-files-directive></source-files-directive>
+            </div>
+        </div>
+        <div class="center-ide">
+            <div class="code-unit">
+                <div class="controls">
+                    <a class="run" ng-click="is_debug = false; setTimeout(0)" onclick="run(this.form);">[Run]</a>
+                    <a class="debug" ng-click="is_debug = true; setTimeout(80)" onclick="debug_toggle(this.form);">[Debug]</a>
+                    <a class="step" onclick="run_step();">[Step]</a>
+                    <a class="to-breakpoint" onclick="run_debug();">[To breakpoint]</a>
+                </div>
+                <form class="code-area">
+                    <textarea id="edit-source" ng-model="file.text">
+
+                    </textarea>
+                </form>
+            </div>
+            <div class="output">
+                <pre class="viewer" id="outputview"></pre>
+            </div>
+        </div>
+        <div class="memory scroll" infinite-scroll="loadMore()">
+            <div ng-repeat="line in lines" class="viewer">
+                <p>
+                    <input style="border: hidden; background: white" size="4" disabled="true" type="text"
+                           ng-value="'0x'+ $index.toString(16)">
+                    <input type="number" min="0" style="max-width: 40px; border: hidden" id="mem"
+                           onfocusout="if(value < 0 || value > 255 || value.length == 0) value = 0;"
+                           ng-class="{inuse: is_debug && getMemory() == $index}"
+                           ng-model="memory[$index]">
+                    <input style="border: hidden; background: white" size="1" disabled="true"
+                           ng-value="tochar(memory[$index])">
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="hint">
+        <p>Use # for breakpoint.</p>
+    </div>
+</div>

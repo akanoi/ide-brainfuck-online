@@ -32,7 +32,9 @@ app.use(session({
     secret: config.get('session:secret'),
     key: config.get('session:key'),
     cookie: config.get('session:cookie'),
-    store: new MongoStore({mongooseConnection: mongoose.connection})
+    store: new MongoStore({mongooseConnection: mongoose.connection}),
+    saveUninitialized: true,
+    resave: true
 }));
 
 app.use(require('./middleware/sendHttpError'));
@@ -56,7 +58,6 @@ app.use('/registration', registration);
 app.use('/delete', file_delete);
 app.use('/files', files);
 app.use('/rename', file_rename);
-
 
 
 // catch 404 and forward to error handler

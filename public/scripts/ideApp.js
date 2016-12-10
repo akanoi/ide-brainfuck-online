@@ -4,12 +4,12 @@
 
     angular
         .module('ideApp', [])
-        .controller('ideAppController', function ($http, $interval, $scope, SourceService) {
+        .controller('IdeAppController', function ($http, $interval, $scope, SourceService) {
             $scope.isAtInstruction = function (i) {
                 return i == g_ip;
             };
-            $scope.is_debug = false;
 
+            $scope.is_debug = false;
 
             $scope.setInterval = function (interval) {
                 g_timeout = interval;
@@ -35,7 +35,7 @@
                 return g_ip
             }, function (n) {
                 if ($scope.is_debug) {
-                    var edit_source = $('#edit_source');
+                    var edit_source = $('#edit-source');
                     edit_source[0].selectionStart = n - 1;
                     edit_source[0].selectionEnd = n;
                 }
@@ -47,7 +47,7 @@
                 var date = new Date();
                 var newFile = {
                     stats: {
-                        name: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds()
+                        name: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
                     },
                     text: ''
                 };
@@ -58,7 +58,7 @@
 
 
             $scope.save = function () {
-                SourceService.file.text = $('#edit_source').val();
+                SourceService.file.text = $('#edit-source').val();
                 $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
             };
 
