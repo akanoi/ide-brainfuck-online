@@ -1,6 +1,6 @@
 <% layout('./page') %>
 
-<link rel='stylesheet' href='/stylesheets/auth.css' />
+<link rel='stylesheet' href='/stylesheets/auth.css'/>
 
 <p class="col-lg-offset-2">Please enter your name and password to sign in.</p>
 
@@ -16,12 +16,13 @@
         <label for="input-password" class="col-lg-2 control-label">Password</label>
 
         <div class="col-lg-2">
-            <input name="password" value="pass" type="password" class="form-control" id="input-password" placeholder="Password">
+            <input name="password" value="pass" type="password" class="form-control" id="input-password"
+                   placeholder="Password">
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-3">
-            <button type="submit" class="btn btn-primary" data-loading-text="Sending..."><%=blocks.but%></button>
+            <button type="submit" class="btn btn-primary" data-loading-text="Sending..."><%= blocks.but %></button>
             <button type="reset" class="btn btn-default">Cancel</button>
             <span class="help-block error"></span>
         </div>
@@ -29,24 +30,24 @@
 </form>
 
 <script>
-    $(document.forms['login-form']).on('submit', function() {
+    $(document.forms['login-form']).on('submit', function () {
         var form = $(this);
 
         $('.error', form).html('');
         $(":submit", form).button("loading");
 
         $.ajax({
-            url: "<%=blocks.postUrl%>",
+            url: "<%= blocks.postUrl %>",
             method: "POST",
             data: form.serialize(),
-            complete: function() {
+            complete: function () {
                 $(":submit", form).button("reset");
             },
             statusCode: {
-                200: function() {
+                200: function () {
                     window.location.href = "/";
                 },
-                403: function(jqXHR) {
+                403: function (jqXHR) {
                     var error = JSON.parse(jqXHR.responseText);
                     $('.error', form).html(error.message);
                 }

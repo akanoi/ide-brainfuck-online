@@ -1,8 +1,23 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+.container-info {
+    text-align: center;
+    padding-top: 17%;
+}
+
+.container-info p {
+    padding-top: 30px;
+    font-size: 25px;
+}
+
+.container-info a {
+    min-width: 200px;
+    margin-top: 20px;
 }

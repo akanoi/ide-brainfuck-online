@@ -2,12 +2,19 @@
 <% block('title', "BrainFuck IDE") %>
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+    <div class="container-info">
+        <% if (user){ %>
+            <h1>Welcom <%= user.username %>!</h1>
+            <p>Go to IDE</p>
+            <a href="/ide" class="btn btn-primary">Run</a>
+        <% } else { %>
+            <h1>Please register or enter to IDE.</h1>
+        <% } %>
+    </div>
+</body>
 </html>
