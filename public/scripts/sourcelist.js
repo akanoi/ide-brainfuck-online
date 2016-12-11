@@ -3,8 +3,8 @@ var app = angular.module('ideApp');
 app.directive("sourceFilesDirective", ['$http', 'SourceService', function ($http, SourceService) {
     return {
         restrict: "AE",
-        template: '<li>' + '<style> .selected, .selected:focus { color: blue; } </style>' +
-        '<button ng-class="{selected : isSelected($index)}"  ng-dblclick="rename(file)" ng-click="selectFile($index);select(file);" ng-disabled="is_debug" class="btn btn-default btn-xs" style="margin: 10px 5px 0px 10px; width: 85px; height: 20px;">{{file.stats.name}}</button><br>' +
+        template: '<li type="none">' + '<style> .selected { color: blue; } }</style>' +
+        '<button ng-class="{selected : isSelected($index)}"  ng-dblclick="rename(file)" ng-click="selectFile($index);select(file);" ng-disabled="is_debug" class="btn btn-default btn-xs" style="margin: 10px 5px 0px 10px; width: 100px; height: 20px;">{{file.stats.name}}</button><br>' +
         '</li>',
 
         link: function (scope, elem) {
@@ -51,32 +51,6 @@ app.controller("SourceFileListController", function ($http, $scope, SourceServic
             });
         }
     };
-
-
-    // $scope.new = function () {
-    //     var date = new Date();
-    //     var newFile = {
-    //         stats: {
-    //             name: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
-    //         },
-    //         text: ''
-    //     };
-    //     SourceService.sourceFiles.push(newFile);
-    //     SourceService.file = newFile;
-    //     $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
-    // };
-    //
-    //
-    // $scope.save = function () {
-    //     SourceService.file.text = $('#edit-source').val();
-    //     $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
-    // };
-    //
-    //
-    // $scope.delete = function (file) {
-    //     $http.post('/delete', {fileName: file.stats.name, fileText: file.text});
-    // };
-
 
     $http.get('/files').then(function (response) {
         SourceService.sourceFiles = response.data.files.map(function (file) {

@@ -12,7 +12,7 @@ function load() {
 }
 
 function takeCell(index) {
-    var wholeLabel = '0x' + pad_num(index, 7) + ' ' + pad_num(g_memory[index], 3);
+    // var wholeLabel = '0x' + pad_num(index, 7) + ' ' + pad_num(g_memory[index], 3);
     return {
         hex: '0x' + parseInt(index.toString(16), 16),
         data: g_memory[index]

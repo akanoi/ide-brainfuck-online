@@ -2,6 +2,8 @@
 <% block('title', "BrainFuck IDE") %>
 <div onload="init();" ng-app="ideApp">
     <link rel='stylesheet' href='/css/ide.css'/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="scripts/ideApp.js"></script>
     <script src="scripts/sourcelist.js"></script>
     <script src="scripts/source-service.js"></script>
@@ -30,7 +32,7 @@
                     <a class="to-breakpoint" onclick="run_debug();">[To breakpoint]</a>
                 </div>
                 <form class="code-area">
-                    <textarea id="edit-source" ng-model="file.text">
+                    <textarea id="edit-source" ng-model="file.text" name="source">
 
                     </textarea>
                 </form>
@@ -39,16 +41,16 @@
                 <pre class="viewer" id="outputview"></pre>
             </div>
         </div>
-        <div class="memory scroll" infinite-scroll="loadMore()">
+        <div nfinite-scroll="loadMore()" class="memory scroll">
             <div ng-repeat="line in lines" class="viewer">
                 <p>
-                    <input style="border: hidden; background: white" size="4" disabled="true" type="text"
+                    <input style="border: hidden; background: white" size="4" disabled type="text"
                            ng-value="'0x'+ $index.toString(16)">
                     <input type="number" min="0" style="max-width: 40px; border: hidden" id="mem"
                            onfocusout="if(value < 0 || value > 255 || value.length == 0) value = 0;"
                            ng-class="{inuse: is_debug && getMemory() == $index}"
                            ng-model="memory[$index]">
-                    <input style="border: hidden; background: white" size="1" disabled="true"
+                    <input style="border: hidden; background: white" size="1" disabled
                            ng-value="tochar(memory[$index])">
                 </p>
             </div>

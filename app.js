@@ -47,6 +47,7 @@ var login = require('./routes/login');
 var registration = require('./routes/registration');
 var file_rename = require('./routes/file_rename');
 var file_delete = require('./routes/file_delete');
+var file_save = require('./routes/file_save');
 var files = require('./routes/files');
 
 app.use('/', index);
@@ -58,6 +59,7 @@ app.use('/registration', registration);
 app.use('/delete', file_delete);
 app.use('/files', files);
 app.use('/rename', file_rename);
+app.use('/save', file_save);
 
 
 // catch 404 and forward to error handler

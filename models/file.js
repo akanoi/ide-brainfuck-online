@@ -4,6 +4,8 @@ var util = require('util');
 var mongoose = require('../libs/mongoose'),
     Schema = mongoose.Schema;
 
+mongoose.Promise = global.Promise;
+
 var schema = new Schema({
     id: {
         type: String,

@@ -47,20 +47,20 @@
                 var date = new Date();
                 var newFile = {
                     stats: {
-                        name: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+                        name: date.getDay() + "." + date.getMonth() + "/" + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
                     },
                     text: ''
                 };
                 SourceService.sourceFiles.push(newFile);
                 SourceService.file = newFile;
-                $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
+                $http.post('/save', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
             };
 
 
-            $scope.save = function () {
-                SourceService.file.text = $('#edit-source').val();
-                $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
-            };
+            // $scope.save = function () {
+            //     SourceService.file.text = $('#edit-source').val();
+            //     $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
+            // };
 
 
             $interval(function () {
@@ -90,6 +90,10 @@
                 if (int < 32 || int > 127)
                     return '.';
                 return String.fromCharCode(int);
+            };
+
+            $scope.alert_1 = function () {
+                alert(1);
             };
         });
 })();
