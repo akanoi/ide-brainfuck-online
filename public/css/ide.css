@@ -64,7 +64,7 @@ a:hover {
     color: darkgrey;
 }
 
-.step, .to-breakpoint {
+#step, #to-breakpoint {
     display: none;
 }
 

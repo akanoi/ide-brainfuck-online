@@ -177,7 +177,6 @@ function bf_interpret(code) {
     set_viewdata('outputview', ' ');
     document.getElementById('edit-source').disabled = true;
     disable_button('debug');
-    // document.getElementById('button_run').src = "sourse/player_stop.png";
     bf_run_step();
 }
 
@@ -185,7 +184,6 @@ function bf_stop_run() {
     enable_button('debug');
     change_button_caption('run', '[Run]');
     document.getElementById('edit-source').disabled = false;
-    // document.getElementById('button_run').src = "sourse/player_play%20(1).png";
     g_running = 0;
 }
 
@@ -224,8 +222,7 @@ function run() {
 function debug_done() {
     disable_button('step');
     disable_button('to-breakpoint');
-    // debug_toggle(document.getElementById('mainform'));
-    debug_toggle("");
+    debug_toggle();
 }
 
 function debug_toggle() {
@@ -233,7 +230,7 @@ function debug_toggle() {
         g_debugging = 0;
         document.getElementById('edit-source').disabled = false;
         enable_button('run');
-        // document.getElementById('button_debug').src = "sourse/player_rewind.png";
+        change_button_caption('debug', '[Debug]');
         disable_button('step');
         enable_button('debug');
         disable_button('to-breakpoint');
@@ -241,7 +238,7 @@ function debug_toggle() {
         g_debugging = 1;
         document.getElementById('edit-source').disabled = true;
         disable_button('run');
-        // document.getElementById('debug').src = "sourse/player_stop.png";
+        change_button_caption('debug', '[Stop debug]');
         enable_button('step');
         enable_button('to-breakpoint');
         set_viewdata('outputview', ' ');
@@ -308,20 +305,15 @@ function run_debug_step() {
 
 function disable_button(name) {
     var element = document.getElementById(name);
-    // element.disabled = true;
-    // element.style.opacity = 0.3;
     element.style.display = 'none';
 }
 
 function enable_button(name) {
     var element = document.getElementById(name);
-    // element.disabled = false;
-    // element.style.opacity = 1;
-    element.style.display = '';
+    element.style.display = 'inline';
 }
 
 function change_button_caption(name, caption) {
     var element = document.getElementById(name);
-    // element.value = caption;
-    // element.textContent = caption;
+    element.textContent = caption;
 }

@@ -26,10 +26,10 @@
         <div class="center-ide">
             <div class="code-unit">
                 <div class="controls">
-                    <a class="run" ng-click="is_debug = false; setTimeout(0)" onclick="run();">[Run]</a>
-                    <a class="debug" ng-click="is_debug = true; setTimeout(80)" onclick="debug_toggle();">[Debug]</a>
-                    <a class="step" onclick="run_step();">[Step]</a>
-                    <a class="to-breakpoint" onclick="run_debug();">[To breakpoint]</a>
+                    <a id="run" ng-click="is_debug = false; setTimeout(0)" onclick="run();">[Run]</a>
+                    <a id="debug" ng-click="is_debug = true; setTimeout(80)" onclick="debug_toggle();">[Debug]</a>
+                    <a id="step" onclick="run_step();">[Step]</a>
+                    <a id="to-breakpoint" onclick="run_debug();">[To breakpoint]</a>
                 </div>
                 <form class="code-area">
                     <textarea id="edit-source" ng-model="file.text" name="source">
