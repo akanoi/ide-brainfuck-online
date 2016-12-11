@@ -1,16 +1,23 @@
 var app = angular.module('ideApp');
 
+app.service('SourceService', function () {
+    this.sourceFiles = [];
+    this.file = {};
+    this.image = {};
+});
+
+
 app.directive("sourceFilesDirective", ['$http', 'SourceService', function ($http, SourceService) {
     return {
         restrict: "AE",
         template: '<li type="none">' + '<style> .selected { color: blue; } }</style>' +
-        '<button ng-class="{selected : isSelected($index)}"  ng-dblclick="rename(file)" ng-click="selectFile($index);select(file);" ng-disabled="is_debug" class="btn btn-default btn-xs" style="margin: 10px 5px 0px 10px; width: 100px; height: 20px;">{{file.stats.name}}</button><br>' +
+        '<button ng-class="{selected : isSelected($index)}"  ng-dblclick="rename(file)" ng-click="selectFile($index);select(file);" class="btn btn-default btn-xs" style="margin: 10px 5px 0px 10px; width: 100px; height: 20px;">{{file.stats.name}}</button><br>' +
         '</li>',
 
         link: function (scope, elem) {
             scope.select = function (file) {
                 SourceService.file = file;
-                $('#edit_source').val(SourceService.file.text);
+                $('#edit-source').val(SourceService.file.text);
             };
 
         }

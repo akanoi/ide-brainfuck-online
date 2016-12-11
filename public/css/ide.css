@@ -64,6 +64,25 @@ a:hover {
     color: darkgrey;
 }
 
+.step, .to-breakpoint {
+    display: none;
+}
+
 pre {
     height: 100%;
+}
+
+.controls > button {
+    background: none;
+    border: none;
+    text-decoration-color: black;
+    outline: none;
+    color: black;
+}
+
+button:hover {
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    cursor: pointer;
 }

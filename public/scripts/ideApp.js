@@ -51,16 +51,17 @@
                     },
                     text: ''
                 };
+                $('#edit-source').val(' ');
                 SourceService.sourceFiles.push(newFile);
                 SourceService.file = newFile;
                 $http.post('/save', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
             };
 
-
-            // $scope.save = function () {
-            //     SourceService.file.text = $('#edit-source').val();
-            //     $http.post('/files', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
-            // };
+            // TODO add function for download file
+            $scope.save = function () {
+                SourceService.file.text = $('#edit-source').val();
+                $http.post('/save', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
+            };
 
 
             $interval(function () {

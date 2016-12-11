@@ -20,10 +20,11 @@ function init() {
     if (navigator.userAgent.toLowerCase().indexOf("msie") != -1) {
         g_linebreaker = "\r";
     }
-    document.getElementById('edit_source').value = "";
+    document.getElementById('edit-source').value = "";
     g_debugging = 1;
     init_memory();
-    debug_toggle(document.getElementById('mainform'));
+    // debug_toggle(document.getElementById('mainform'));
+    debug_toggle("");
     load();
 }
 
@@ -44,7 +45,7 @@ function init_io() {
 function init_prog(code) {
     g_program.length = 0;
     for (var i = 0; i < code.length; i++) {
-        var op = code.charAt(i)
+        var op = code.charAt(i);
         if (is_valid_op(op)) {
             g_program[g_program.length] = op;
         }
@@ -162,29 +163,29 @@ function execute_opcode(op) {
     }
 }
 
-function bf_interpret(prog) {
+function bf_interpret(code) {
 
     if (g_running) {
         bf_stop_run();
         return;
     }
     g_running = 1;
-    init_prog(prog);
+    init_prog(code);
     init_memory();
     init_io();
     init_input();
     set_viewdata('outputview', ' ');
-    document.getElementById('edit_source').disabled = true;
-    disable_button('button_debug');
-    document.getElementById('button_run').src = "sourse/player_stop.png";
+    document.getElementById('edit-source').disabled = true;
+    disable_button('debug');
+    // document.getElementById('button_run').src = "sourse/player_stop.png";
     bf_run_step();
 }
 
 function bf_stop_run() {
-    enable_button('button_debug');
-    change_button_caption('button_run', 'Run');
-    document.getElementById('edit_source').disabled = false;
-    document.getElementById('button_run').src = "sourse/player_play%20(1).png";
+    enable_button('debug');
+    change_button_caption('run', '[Run]');
+    document.getElementById('edit-source').disabled = false;
+    // document.getElementById('button_run').src = "sourse/player_play%20(1).png";
     g_running = 0;
 }
 
@@ -206,12 +207,6 @@ function bf_run_step() {
     window.setTimeout('bf_run_step();', g_timeout);
 }
 
-function pad_num(a, b) {
-    var c = String(a);
-    for (var i = c.length; i < b; i++) c = '0' + c;
-    return c;
-}
-
 function update_outputview() {
     set_viewdata('outputview', g_output);
 }
@@ -222,32 +217,33 @@ function set_viewdata(view, data) {
     p_node.replaceChild(new_node, p_node.childNodes[0]);
 }
 
-function run(f) {
-    bf_interpret(f.source.value);
+function run() {
+    bf_interpret(document.getElementById('edit-source').value);
 }
 
 function debug_done() {
-    disable_button('button_step');
-    disable_button('button_run_debug');
-    debug_toggle(document.getElementById('mainform'));
+    disable_button('step');
+    disable_button('to-breakpoint');
+    // debug_toggle(document.getElementById('mainform'));
+    debug_toggle("");
 }
 
-function debug_toggle(f) {
+function debug_toggle() {
     if (g_debugging == 1) {
         g_debugging = 0;
-        document.getElementById('edit_source').disabled = false;
-        enable_button('button_run');
-        document.getElementById('button_debug').src = "sourse/player_rewind.png";
-        disable_button('button_step');
-        enable_button('button_debug');
-        disable_button('button_run_debug');
+        document.getElementById('edit-source').disabled = false;
+        enable_button('run');
+        // document.getElementById('button_debug').src = "sourse/player_rewind.png";
+        disable_button('step');
+        enable_button('debug');
+        disable_button('to-breakpoint');
     } else {
         g_debugging = 1;
-        document.getElementById('edit_source').disabled = true;
-        disable_button('button_run');
-        document.getElementById('button_debug').src = "sourse/player_stop.png";
-        enable_button('button_step');
-        enable_button('button_run_debug');
+        document.getElementById('edit-source').disabled = true;
+        disable_button('run');
+        // document.getElementById('debug').src = "sourse/player_stop.png";
+        enable_button('step');
+        enable_button('to-breakpoint');
         set_viewdata('outputview', ' ');
         start_debugger();
     }
@@ -256,7 +252,7 @@ function debug_toggle(f) {
 function start_debugger() {
     init_memory();
     init_io();
-    init_prog(document.getElementById('edit_source').value);
+    init_prog(document.getElementById('edit-source').value);
     init_input();
     update_outputview();
 }
@@ -274,16 +270,16 @@ function run_step() {
 }
 
 function start_debug_run() {
-    disable_button('button_debug');
-    disable_button('button_step');
-    change_button_caption('button_run_debug', 'Stop Running');
+    disable_button('debug');
+    disable_button('step');
+    change_button_caption('to-breakpoint', '[Stop]');
     g_debugging_running = 1;
 }
 
 function stop_debug_run() {
-    enable_button('button_debug');
-    enable_button('button_step');
-    change_button_caption('button_run_debug', 'Run To Breakpoint');
+    enable_button('debug');
+    enable_button('step');
+    change_button_caption('to-breakpoint', '[To breakpoint]');
     g_debugging_running = 0;
 }
 
@@ -311,18 +307,21 @@ function run_debug_step() {
 }
 
 function disable_button(name) {
-    var elm = document.getElementById(name);
-    elm.disabled = true;
-    elm.style.opacity = 0.3;
+    var element = document.getElementById(name);
+    // element.disabled = true;
+    // element.style.opacity = 0.3;
+    element.style.display = 'none';
 }
 
 function enable_button(name) {
-    var elm = document.getElementById(name);
-    elm.disabled = false;
-    elm.style.opacity = 1;
+    var element = document.getElementById(name);
+    // element.disabled = false;
+    // element.style.opacity = 1;
+    element.style.display = '';
 }
 
 function change_button_caption(name, caption) {
-    var elm = document.getElementById(name);
-    elm.value = caption;
+    var element = document.getElementById(name);
+    // element.value = caption;
+    // element.textContent = caption;
 }
