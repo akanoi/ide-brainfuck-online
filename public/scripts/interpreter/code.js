@@ -1,91 +1,93 @@
-var g_debugging = 0;
-var g_memory = [];
-var g_max_mem = 255;
-var g_max_val = 255;
-var g_ip = 0;
-var g_mp = 0;
-var g_dp = 0;
-var g_program = [];
-var g_targets = [];
-var g_input = [];
-var g_output = '';
-var g_quit_debug_run = 0;
-var g_debugging_running = 0;
-var g_prompt_for_input = 0;
-var g_running = 0;
-var g_linebreaker = "\n";
-var g_timeout = 0;
+var is_debugging = 0;
+var memory_array = [];
+var max_count_memory = 255;
+var max_value_memory = 255;
+var index_pointer = 0;
+var memory_pointer = 0;
+var data_pointer = 0;
+var program_code = [];
+var targets = [];
+var input = [];
+var output = '';
+var exit_debug_run = 0;
+var is_debugging_run = 0;
+var prompt_for_input = 0;
+var is_running = 0;
+var timeout = 0;
+
 
 function init() {
-    if (navigator.userAgent.toLowerCase().indexOf("msie") != -1) {
-        g_linebreaker = "\r";
-    }
     document.getElementById('edit-source').value = "";
-    g_debugging = 1;
+    is_debugging = 1;
     init_memory();
-    // debug_toggle(document.getElementById('mainform'));
-    debug_toggle("");
+    debug_toggle();
     load();
 }
 
+
 function init_memory() {
-    for (var i = 0; i <= g_max_mem; i++) {
-        g_mp = i;
-        g_memory[i] = 0;
+    for (var i = 0; i <= max_count_memory; i++) {
+        memory_pointer = i;
+        memory_array[i] = 0;
         addFromMemory();
     }
-    g_mp = 0;
+    memory_pointer = 0;
 }
+
 
 function init_io() {
-    g_dp = 0;
-    g_output = '';
+    data_pointer = 0;
+    output = '';
 }
 
+
 function init_prog(code) {
-    g_program.length = 0;
+    program_code.length = 0;
     for (var i = 0; i < code.length; i++) {
         var op = code.charAt(i);
         if (is_valid_op(op)) {
-            g_program[g_program.length] = op;
+            program_code[program_code.length] = op;
         }
     }
-    g_ip = 0;
+    index_pointer = 0;
     init_targets();
 }
 
+
 function init_targets() {
-    g_targets.length = 0;
+    targets.length = 0;
     var temp_stack = [];
-    for (var i = 0; i < g_program.length; i++) {
-        var op = g_program[i];
+    for (var i = 0; i < program_code.length; i++) {
+        var op = program_code[i];
         if (op == '[') {
             temp_stack.push(i);
         }
         if (op == ']') {
             if (temp_stack.length == 0) alert('Parseing error: ] with no matching [');
             var target = temp_stack.pop();
-            g_targets[i] = target;
-            g_targets[target] = i;
+            targets[i] = target;
+            targets[target] = i;
         }
     }
     if (temp_stack.length > 0) alert('Parseing error: [ with no matching ]');
 }
 
+
 function init_input() {
-    g_prompt_for_input = true;
-    g_input.length = 0;
+    prompt_for_input = true;
+    input.length = 0;
     var in_data = "";
     for (var i = 0; i < in_data.length; i++) {
-        g_input[g_input.length] = in_data.charAt(i);
+        input[input.length] = in_data.charAt(i);
     }
-    g_dp = 0;
+    data_pointer = 0;
 }
+
 
 function checkEmpty(data) {
     while ((!data)) {
         if (data == null) {
-            if (g_running == 1) {
+            if (is_running == 1) {
                 bf_stop_run();
             } else debug_done();
             return 0;
@@ -93,6 +95,7 @@ function checkEmpty(data) {
     }
     return 1;
 }
+
 
 function get_input() {
     var data = window.prompt("Enter an input character:", "");
@@ -110,6 +113,7 @@ function get_input() {
     }
 }
 
+
 function is_valid_op(op) {
     if (op == '+') return 1;
     if (op == '-') return 1;
@@ -119,111 +123,122 @@ function is_valid_op(op) {
     if (op == ']') return 1;
     if (op == '.') return 1;
     if (op == ',') return 1;
-    if (op == '#') return 1;
+    if (op == '@') return 1;
     return 0;
 }
 
+
 function put_output(c) {
-    g_output += c;
+    output = c;
 }
+
 
 function execute_opcode(op) {
     switch (op) {
         case '+':
-            g_memory[g_mp]++;
-            if (g_memory[g_mp] > g_max_val) g_memory[g_mp] = 0;
+            memory_array[memory_pointer]++;
+            if (memory_array[memory_pointer] > max_value_memory) memory_array[memory_pointer] = 0;
             addFromMemory();
             break;
         case '-':
-            g_memory[g_mp]--;
-            if (g_memory[g_mp] < 0) g_memory[g_mp] = g_max_val;
+            memory_array[memory_pointer]--;
+            if (memory_array[memory_pointer] < 0) memory_array[memory_pointer] = max_value_memory;
             addFromMemory();
             break;
         case '>':
-            g_mp++;
-            if (g_mp > g_max_mem) g_mp = 0;
+            memory_pointer++;
+            if (memory_pointer > max_count_memory) memory_pointer = 0;
             break;
         case '<':
-            g_mp--;
-            if (g_mp < 0) g_mp = g_max_mem;
+            memory_pointer--;
+            if (memory_pointer < 0) memory_pointer = max_count_memory;
             break;
         case '[':
-            if (g_memory[g_mp] == 0) g_ip = g_targets[g_ip];
+            if (memory_array[memory_pointer] == 0) index_pointer = targets[index_pointer];
             break;
         case ']':
-            g_ip = g_targets[g_ip] - 1;
+            index_pointer = targets[index_pointer] - 1;
             break;
         case '.':
-            put_output(String.fromCharCode(g_memory[g_mp]));
+            put_output(String.fromCharCode(memory_array[memory_pointer]));
+            update_outputview();
             break;
         case ',':
-            g_memory[g_mp] = get_input();
+            memory_array[memory_pointer] = get_input();
             addFromMemory();
             break;
     }
 }
 
+
 function bf_interpret(code) {
 
-    if (g_running) {
+    if (is_running) {
         bf_stop_run();
         return;
     }
 
-    g_running = 1;
+    is_running = 1;
     init_prog(code);
     init_memory();
     init_io();
     init_input();
-    set_viewdata('outputview', ' ');
+    set_viewdata('outputview', '');
     document.getElementById('edit-source').disabled = true;
     change_button_caption('run', '[Stop]');
     disable_button('debug');
     bf_run_step();
 }
 
+
 function bf_stop_run() {
     enable_button('debug');
     change_button_caption('run', '[Run]');
     document.getElementById('edit-source').disabled = false;
-    g_running = 0;
+    is_running = 0;
 }
 
+
 function bf_run_done() {
-    if (g_running) {
-        set_viewdata('outputview', g_output);
+    if (is_running) {
+        set_viewdata('outputview', output);
     }
     bf_stop_run();
 }
 
+
 function bf_run_step() {
-    var op = g_program[g_ip];
+    var op = program_code[index_pointer];
     execute_opcode(op);
-    g_ip++;
-    if (g_ip >= g_program.length || !g_running) {
+    index_pointer++;
+    if (index_pointer >= program_code.length || !is_running) {
         bf_run_done();
         return;
     }
-    window.setTimeout('bf_run_step();', g_timeout);
+    window.setTimeout('bf_run_step();', timeout);
 }
 
+
 function update_outputview() {
-    set_viewdata('outputview', g_output);
+    set_viewdata('outputview', output);
 }
+
 
 function set_viewdata(view, data) {
     var data = document.createTextNode(data);
     var view = document.getElementById(view);
-    if (data.data == ' ') {
+    if (data.data == '') {
         view.textContent = '';
     } else {
         view.textContent += data.data;
     }
 }
 
+
 function run_code() {
     bf_interpret(document.getElementById('edit-source').value);
 }
+
 
 function debug_done() {
     disable_button('step');
@@ -231,9 +246,10 @@ function debug_done() {
     debug_toggle();
 }
 
+
 function debug_toggle() {
-    if (g_debugging == 1) {
-        g_debugging = 0;
+    if (is_debugging) {
+        is_debugging = 0;
         document.getElementById('edit-source').disabled = false;
         enable_button('run');
         change_button_caption('debug', '[Debug]');
@@ -241,67 +257,76 @@ function debug_toggle() {
         enable_button('debug');
         disable_button('to-breakpoint');
     } else {
-        g_debugging = 1;
+        is_debugging = 1;
         document.getElementById('edit-source').disabled = true;
         disable_button('run');
         change_button_caption('debug', '[Stop debug]');
         enable_button('step');
         enable_button('to-breakpoint');
-        set_viewdata('outputview', ' ');
+        set_viewdata('outputview', '');
         start_debugger();
     }
 }
+
 
 function start_debugger() {
     init_memory();
     init_io();
     init_prog(document.getElementById('edit-source').value);
     init_input();
-    update_outputview();
+    set_viewdata('outputview', '');
 }
 
-function run_step() {
-    var op = g_program[g_ip];
-    execute_opcode(op);
-    g_ip++;
-    update_outputview();
 
-    if (g_ip >= g_program.length) {
-        g_debugging = 1;
+function run_step() {
+    var op = program_code[index_pointer];
+    execute_opcode(op);
+    index_pointer++;
+    // if (op == '.') {
+    //     update_outputview();
+    // }
+
+    if (index_pointer >= program_code.length) {
+        is_debugging = 1;
         debug_done();
     }
 }
+
+
 
 function start_debug_run() {
     disable_button('debug');
     disable_button('step');
     change_button_caption('to-breakpoint', '[Stop]');
-    g_debugging_running = 1;
+    is_debugging_run = 1;
 }
+
 
 function stop_debug_run() {
     enable_button('debug');
     enable_button('step');
     change_button_caption('to-breakpoint', '[To breakpoint]');
-    g_debugging_running = 0;
+    is_debugging_run = 0;
 }
 
+
 function run_debug() {
-    if (g_debugging_running) {
-        g_quit_debug_run = 1;
+    if (is_debugging_run) {
+        exit_debug_run = 1;
     } else {
         start_debug_run();
-        g_quit_debug_run = 0;
+        exit_debug_run = 0;
         run_debug_step();
     }
 }
 
+
 function run_debug_step() {
     run_step();
-    if ((g_program[g_ip] == '#') || g_quit_debug_run || (g_ip >= g_program.length)) {
+    if ((program_code[index_pointer] == '@') || exit_debug_run || (index_pointer >= program_code.length)) {
         stop_debug_run();
-        if (g_ip >= g_program.length) {
-            g_debugging = 1;
+        if (index_pointer >= program_code.length) {
+            is_debugging = 1;
             debug_done();
         }
         return;
@@ -309,15 +334,18 @@ function run_debug_step() {
     window.setTimeout('run_debug_step();', 0);
 }
 
+
 function disable_button(name) {
     var element = document.getElementById(name);
     element.style.display = 'none';
 }
 
+
 function enable_button(name) {
     var element = document.getElementById(name);
     element.style.display = 'inline';
 }
+
 
 function change_button_caption(name, caption) {
     var element = document.getElementById(name);

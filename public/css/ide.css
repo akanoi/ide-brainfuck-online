@@ -5,8 +5,10 @@
 
 .memory-panel {
     height: 400px;
-    width: 400px;
+    width: 350px;
     margin-left: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .code-unit {
@@ -22,7 +24,7 @@
 
 .files {
     height: 400px;
-    width: 400px;
+    width: 350px;
     margin-right: 10px;
 }
 
@@ -85,4 +87,19 @@ button:hover {
     color: white;
     background-color: black;
     cursor: pointer;
+}
+
+input {
+    border: hidden;
+    background: white;
+    max-width: 45px;
+}
+
+
+.ceil {
+    padding-left: 25px;
+}
+
+.content {
+    padding-left: 17px;
 }

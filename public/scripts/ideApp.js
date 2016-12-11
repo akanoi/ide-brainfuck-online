@@ -6,33 +6,33 @@
         .module('ideApp', [])
         .controller('IdeAppController', function ($http, $interval, $scope, SourceService) {
             $scope.isAtInstruction = function (i) {
-                return i == g_ip;
+                return i == index_pointer;
             };
 
             $scope.is_debug = false;
 
             $scope.setInterval = function (interval) {
-                g_timeout = interval;
+                timeout = interval;
             };
 
 
             $scope.getInterval = function () {
-                return g_timeout;
+                return timeout;
             };
 
 
             $scope.getInstruction = function () {
-                return g_ip
+                return index_pointer
             };
 
 
             $scope.getMemory = function () {
-                return g_mp
+                return memory_pointer
             };
 
 
             $scope.$watch(function () {
-                return g_ip
+                return index_pointer
             }, function (n) {
                 if ($scope.is_debug) {
                     var edit_source = $('#edit-source');
@@ -41,8 +41,7 @@
                 }
             });
 
-            $scope.memory = g_memory;
-            // $scope.memory = [1, 2, 3];
+
             $scope.new = function () {
                 var date = new Date();
                 var newFile = {
@@ -84,7 +83,8 @@
 
             $scope.loadMore = load;
             $scope.lines = lines;
-            // $interval(function () {}, 100);
+            $scope.memory = memory_array;
+            $interval(function () {}, 100);
 
             $scope.tochar = function (int) {
                 if (int < 32 || int > 127)

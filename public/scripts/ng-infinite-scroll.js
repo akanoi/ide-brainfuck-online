@@ -29,11 +29,6 @@ app.directive('infiniteScroll', [
 
 
                 var handler = function () {
-                    console.log("$window.height()", $window.height());
-                    console.log("$window.scrollTop()", $window.scrollTop());
-                    console.log("elem.offset().top", elem.offset().top);
-                    console.log("elem.height()", elem.height());
-
                     var windowBottom = $window.scrollTop() * 2 - elem.offset().top * index * 6;
                     var elementBottom = elem.offset().top;
                     var remaining = elementBottom - windowBottom;

@@ -1,6 +1,6 @@
 <% layout('../layout/page') -%>
 <% block('title', "BrainFuck IDE") %>
-<div onload="init();" ng-app="ideApp">
+<body onload="init();" ng-app="ideApp">
     <link rel='stylesheet' href='/css/ide.css'/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -8,8 +8,10 @@
     <script src="scripts/sourcelist.js"></script>
     <script src="scripts/source-service.js"></script>
     <script src="scripts/drop-directive.js"></script>
+    <script src="scripts/ng-infinite-scroll.js"></script>
+    <script src="scripts/infinityScroll.js"></script>
     <script src="scripts/interpreter/code.js"></script>
-    <script src="scripts/interpreter/infinityScroll.js"></script>
+
 
 
     <div class="main" ng-controller="IdeAppController">
@@ -43,19 +45,17 @@
         </div>
         <div infinite-scroll="loadMore()" class="scroll memory-panel">
             <div ng-repeat="line in lines" class="viewer">
-                <p>
-                    <!--<input size="4" type="text"-->
-                          <!--ng-value="'0x'+ $index.toString(16)">-->
-                    <!--<input type="number" min="0"-->
-                           <!--onfocusout="if(value < 0 || value > 255 || value.length == 0) value = 0;"-->
-                           <!--ng-model="memory[$index]">-->
-                    <!--<input style="border: hidden; background: white" size="1" disabled-->
-                           <!--ng-value="tochar(memory[$index])">-->
-                </p>
+                <span class="ceil">
+                    <input size="4" type="text" ng-value="line.hex">
+                    <input type="number" min="0" id="memory"
+                           onfocusout="if(value < 0 || value > 255 || value.length == 0) value = 0;"
+                           ng-model="memory[$index]">
+                    <input size="1" disabled ng-value="tochar(memory[$index])">
+                </span>
             </div>
         </div>
     </div>
     <div class="hint">
-        <p>Use # for breakpoint.</p>
+        <p>Use @ for breakpoint.</p>
     </div>
-</div>
+</body>
