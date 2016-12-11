@@ -42,7 +42,7 @@
             });
 
             $scope.memory = g_memory;
-
+            // $scope.memory = [1, 2, 3];
             $scope.new = function () {
                 var date = new Date();
                 var newFile = {
@@ -64,9 +64,9 @@
             };
 
 
-            $interval(function () {
-                $scope.save();
-            }, 15000);
+            // $interval(function () {
+            //     $scope.save();
+            // }, 15000);
 
 
             $scope.delete = function (file) {
@@ -84,17 +84,13 @@
 
             $scope.loadMore = load;
             $scope.lines = lines;
-            $interval(function () {
-            }, 100);
+            // $interval(function () {}, 100);
 
             $scope.tochar = function (int) {
                 if (int < 32 || int > 127)
                     return '.';
-                return String.fromCharCode(int);
+                return String.fromCharCode(int).toUpperCase();
             };
 
-            $scope.alert_1 = function () {
-                alert(1);
-            };
         });
 })();

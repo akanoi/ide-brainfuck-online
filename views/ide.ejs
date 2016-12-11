@@ -26,8 +26,8 @@
         <div class="center-ide">
             <div class="code-unit">
                 <div class="controls">
-                    <a id="run" ng-click="is_debug = false; setTimeout(0)" onclick="run();">[Run]</a>
-                    <a id="debug" ng-click="is_debug = true; setTimeout(80)" onclick="debug_toggle();">[Debug]</a>
+                    <a id="run" ng-click="is_debug = false" onclick="run_code();">[Run]</a>
+                    <a id="debug" ng-click="is_debug = true" onclick="debug_toggle();">[Debug]</a>
                     <a id="step" onclick="run_step();">[Step]</a>
                     <a id="to-breakpoint" onclick="run_debug();">[To breakpoint]</a>
                 </div>
@@ -41,17 +41,16 @@
                 <pre class="viewer" id="outputview"></pre>
             </div>
         </div>
-        <div nfinite-scroll="loadMore()" class="memory scroll">
+        <div infinite-scroll="loadMore()" class="scroll memory-panel">
             <div ng-repeat="line in lines" class="viewer">
                 <p>
-                    <input style="border: hidden; background: white" size="4" disabled type="text"
-                           ng-value="'0x'+ $index.toString(16)">
-                    <input type="number" min="0" style="max-width: 40px; border: hidden" id="mem"
-                           onfocusout="if(value < 0 || value > 255 || value.length == 0) value = 0;"
-                           ng-class="{inuse: is_debug && getMemory() == $index}"
-                           ng-model="memory[$index]">
-                    <input style="border: hidden; background: white" size="1" disabled
-                           ng-value="tochar(memory[$index])">
+                    <!--<input size="4" type="text"-->
+                          <!--ng-value="'0x'+ $index.toString(16)">-->
+                    <!--<input type="number" min="0"-->
+                           <!--onfocusout="if(value < 0 || value > 255 || value.length == 0) value = 0;"-->
+                           <!--ng-model="memory[$index]">-->
+                    <!--<input style="border: hidden; background: white" size="1" disabled-->
+                           <!--ng-value="tochar(memory[$index])">-->
                 </p>
             </div>
         </div>

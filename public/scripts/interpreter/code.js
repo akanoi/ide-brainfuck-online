@@ -169,6 +169,7 @@ function bf_interpret(code) {
         bf_stop_run();
         return;
     }
+
     g_running = 1;
     init_prog(code);
     init_memory();
@@ -176,6 +177,7 @@ function bf_interpret(code) {
     init_input();
     set_viewdata('outputview', ' ');
     document.getElementById('edit-source').disabled = true;
+    change_button_caption('run', '[Stop]');
     disable_button('debug');
     bf_run_step();
 }
@@ -210,12 +212,16 @@ function update_outputview() {
 }
 
 function set_viewdata(view, data) {
-    var new_node = document.createTextNode(data);
-    var p_node = document.getElementById(view);
-    p_node.replaceChild(new_node, p_node.childNodes[0]);
+    var data = document.createTextNode(data);
+    var view = document.getElementById(view);
+    if (data.data == ' ') {
+        view.textContent = '';
+    } else {
+        view.textContent += data.data;
+    }
 }
 
-function run() {
+function run_code() {
     bf_interpret(document.getElementById('edit-source').value);
 }
 

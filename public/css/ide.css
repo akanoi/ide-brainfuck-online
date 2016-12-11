@@ -3,7 +3,7 @@
     padding-top: 80px;
 }
 
-.memory{
+.memory-panel {
     height: 400px;
     width: 400px;
     margin-left: 10px;
@@ -39,7 +39,7 @@ textarea {
     outline: none;
 }
 
-.memory, .output, .files, .code-unit {
+.memory-panel, .output, .files, .code-unit {
     border: dotted 2px;
 }
 
