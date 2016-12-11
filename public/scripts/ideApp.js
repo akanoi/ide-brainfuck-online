@@ -46,7 +46,7 @@
                 var date = new Date();
                 var newFile = {
                     stats: {
-                        name: date.getDay() + "." + date.getMonth() + "/" + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+                        name: date.getDate()+ "." + date.getMonth() + "/" + date.getHours() + ':' + date.getMinutes()
                     },
                     text: ''
                 };
@@ -61,11 +61,6 @@
                 SourceService.file.text = $('#edit-source').val();
                 $http.post('/save', {fileName: SourceService.file.stats.name, fileText: SourceService.file.text});
             };
-
-
-            // $interval(function () {
-            //     $scope.save();
-            // }, 15000);
 
 
             $scope.delete = function (file) {

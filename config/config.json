@@ -1,7 +1,7 @@
 {
   "port": 8080,
   "mongoose": {
-    "uri": "mongodb://localhost/brain",
+    "uri": "mongodb://localhost/ide",
     "options": {
       "server": {
         "socketOptions": {

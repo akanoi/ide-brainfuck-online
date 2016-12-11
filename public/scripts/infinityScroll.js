@@ -3,9 +3,8 @@ var lines = [];
 
 
 function load() {
-    for (var i = 0; i <= 32; i++) {
+    for (var i = 0; i <= max_count_memory; i++) {
         if (memory_counter <= lines.length && memory_counter < memory_array.length) {
-            console.log(memory_counter);
             lines.push(takeCell(memory_counter));
             memory_counter++;
         }
@@ -15,7 +14,7 @@ function load() {
 
 function takeCell(index) {
     return {
-        hex: '0x' + index.toString(16),
+        hex: '0x' + (index.toString(16)).toUpperCase(),
         data: memory_array[index]
     };
 }
