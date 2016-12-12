@@ -1,7 +1,9 @@
 <% layout('../layout/page') -%>
 <% block('title', "BrainFuck IDE") %>
+<%if (user) {%>
 <body onload="init();" ng-app="ideApp">
     <link rel='stylesheet' href='/css/ide.css'/>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="scripts/ideApp.js"></script>
@@ -11,26 +13,14 @@
     <script src="scripts/infinityScroll.js"></script>
     <script src="scripts/interpreter/code.js"></script>
 
-
-
-    <div class="main" ng-controller="IdeAppController">
-        <div class="files" ng-controller="SourceFileListController">
-            <div class="controls">
-                <a class="new" ng-click="new()">[New]</a>
-                <a class="delete" ng-click="remove()">[Delete]</a>
-                <a class="save" ng-click="save()">[Save]</a>
-            </div>
-            <div class="content" drop-directive ng-repeat="file in sourceFiles">
-                <source-files-directive></source-files-directive>
-            </div>
-        </div>
-        <div class="center-ide">
+    <div class="main row" ng-controller="IdeAppController">
+        <div class="center-ide col-md-10">
             <div class="code-unit">
                 <div class="controls">
-                    <a id="run" ng-click="is_debug = false" onclick="run_code();">[Run]</a>
-                    <a id="debug" ng-click="is_debug = true" onclick="debug_toggle();">[Debug]</a>
-                    <a id="step" onclick="run_step();">[Step]</a>
-                    <a id="to-breakpoint" onclick="run_debug();">[To breakpoint]</a>
+                    <img title="Run" src="/images/play.svg" id="run" ng-click="is_debug = false" onclick="run_code();"/>
+                    <img title="Debug" src="/images/debug.svg" id="debug" ng-click="is_debug = true" onclick="debug_toggle();"/>
+                    <img title="Step" src="/images/next.svg" id="step" onclick="run_step();"/>
+                    <img title="To breakpoint" src="/images/skip.svg" id="to-breakpoint" onclick="run_debug();"/>
                 </div>
                 <form class="code-area">
                     <textarea id="edit-source" ng-model="file.text" name="source">
@@ -38,12 +28,24 @@
                     </textarea>
                 </form>
             </div>
+
             <div class="output">
-                <pre class="viewer" id="outputview"></pre>
+                <textarea disabled class="viewer" id="outputview" ></textarea>
             </div>
         </div>
-        <div infinite-scroll="loadMore()" class="scroll memory-panel">
-            <div ng-repeat="line in lines" class="viewer">
+        <div class="col-md-2">
+            <div class="files" ng-controller="SourceFileListController">
+                <div class="controls">
+                    <img title="Create file" src="/images/new.svg" class="new" ng-click="new()"/>
+                    <img title="Delete file" src="/images/delete.svg" class="delete" ng-click="remove()"/>
+                    <img title="Save file" src="/images/save.svg" class="save" ng-click="save()"/>
+                </div>
+                <div class="content" drop-directive ng-repeat="file in sourceFiles">
+                    <source-files-directive></source-files-directive>
+                </div>
+            </div>
+            <div infinite-scroll="loadMore()" class="scroll memory-panel">
+                <div ng-repeat="line in lines" class="viewer">
                 <span class="ceil">
                     <input size="4" type="text" ng-value="line.hex">
                     <input type="number" min="0" id="memory"
@@ -51,6 +53,7 @@
                            ng-model="memory[$index]">
                     <input size="1" disabled ng-value="tochar(memory[$index])">
                 </span>
+                </div>
             </div>
         </div>
     </div>
@@ -58,3 +61,9 @@
         <p>Use @ for breakpoint.</p>
     </div>
 </body>
+<%} else {%>
+<link rel='stylesheet' href='/css/style.css'/>
+<body class="no-login">
+    <h1>Please, <a href="/login">login</a> or <a href="/registration">registration</a>!</h1>
+</body>
+<%}%>

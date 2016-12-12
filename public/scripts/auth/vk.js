@@ -32,7 +32,7 @@ function registration_vk() {
             complete: function () {},
             statusCode: {
                 200: function () {
-                    window.location.href = "/";
+                    window.location.href = "/ide";
                 },
                 403: function (jqXHR) {}
             }
@@ -61,7 +61,7 @@ function login_vk() {
             complete: function () {},
             statusCode: {
                 200: function () {
-                    window.location.href = "/";
+                    window.location.href = "/ide";
                 },
                 403: function (jqXHR) {}
             }

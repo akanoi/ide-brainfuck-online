@@ -184,7 +184,7 @@ function bf_interpret(code) {
     init_io();
     init_input();
     set_viewdata('outputview', '');
-    document.getElementById('edit-source').disabled = true;
+    // document.getElementById('edit-source').disabled = true;
     change_button_caption('run', '[Stop]');
     disable_button('debug');
     bf_run_step();
@@ -258,7 +258,7 @@ function debug_toggle() {
         disable_button('to-breakpoint');
     } else {
         is_debugging = 1;
-        document.getElementById('edit-source').disabled = true;
+        // document.getElementById('edit-source').disabled = true;
         disable_button('run');
         change_button_caption('debug', '[Stop debug]');
         enable_button('step');
@@ -282,9 +282,6 @@ function run_step() {
     var op = program_code[index_pointer];
     execute_opcode(op);
     index_pointer++;
-    // if (op == '.') {
-    //     update_outputview();
-    // }
 
     if (index_pointer >= program_code.length) {
         is_debugging = 1;
@@ -292,6 +289,25 @@ function run_step() {
     }
 }
 
+
+function SelectText(begin, end) {
+    ta = document.getElementById("edit-source");
+    if (ta.createTextRange) {
+        tr = ta.createTextRange();
+
+        //tr.findText("something");
+
+        tr.move("character", begin);
+        tr.moveEnd("character", end-begin);
+
+        tr.select();
+
+    } else if (ta.setSelectionRange) {
+
+        ta.setSelectionRange(begin, end);
+
+    }
+}
 
 
 function start_debug_run() {

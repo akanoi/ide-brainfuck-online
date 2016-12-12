@@ -15,7 +15,7 @@ function registration_fb() {
                     },
                     statusCode: {
                         200: function () {
-                            window.location.href = "/";
+                            window.location.href = "/ide";
                         },
                         403: function (jqXHR) {
                         }
@@ -45,7 +45,7 @@ function login_fb() {
                     },
                     statusCode: {
                         200: function () {
-                            window.location.href = "/";
+                            window.location.href = "/ide";
                         },
                         403: function (jqXHR) {
                         }

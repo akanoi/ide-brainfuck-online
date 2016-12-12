@@ -1,36 +1,54 @@
+.main, .hint {
+    font-family: 'Inconsolata', monospace;
+}
+
 .main {
-    display: flex;
-    padding-top: 80px;
+    padding: 0;
+    margin: 0;
+    /*padding-right: 1000px;*/
+    /*display: flex;*/
+    padding-top: 51px;
 }
 
 .memory-panel {
-    height: 400px;
-    width: 350px;
-    margin-left: 10px;
+    margin-left: -30px;
+    /*height: 400px;*/
+    width: auto;
+    max-height: 350px;
+    /*margin-left: 10px;*/
     overflow-y: auto;
     overflow-x: hidden;
+    border-left: none;
 }
 
 .code-unit {
     height: 400px;
-    width: 800px;
+    width: auto;
 }
 
 .output {
     height: 150px;
     width: auto;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
+}
+
+.main {
+    /*width: 111.5%;*/
+    width: 100%;
+    border: solid 1px;
 }
 
 .files {
-    height: 400px;
-    width: 350px;
-    margin-right: 10px;
+    height: 200px;
+    width: auto;
+    margin-left: -30px;
+    /*height: 100%;*/
+    /*width: 350px;*/
 }
 
 .code-area {
-    width: 100%;
-    height: 90%;
+    /*width: 100%;*/
+    /*height: 90%;*/
 }
 
 textarea {
@@ -42,17 +60,46 @@ textarea {
 }
 
 .memory-panel, .output, .files, .code-unit {
-    border: dotted 2px;
+    border: solid 2px;
+}
+
+.memory-panel {
+    border-top: hidden;
+    border-left: hidden;
+}
+
+.files {
+    border-top: hidden;
+    border-left: hidden;
+}
+
+.output {
+    border-top: hidden;
+    margin-left: -129px;
+}
+
+.code-unit {
+    border-top: hidden;
+    margin-left: -129px;
+    /*width: 120%;*/
 }
 
 .controls {
-    padding-bottom: 5px;
-    border-bottom: dotted 2px;
-    text-align: center;
+    /*padding-bottom: 5px;*/
+    border-bottom: solid 2px;
+    /*text-align: center;*/
 }
 
 .controls > a {
     color: black;
+}
+
+.code-unit > .controls {
+    /*padding-left: 20px;*/
+}
+
+.files > .controls {
+    padding-bottom: 1px;
 }
 
 a:hover {
@@ -66,13 +113,14 @@ a:hover {
     color: darkgrey;
 }
 
+.hint {
+    padding-left: 15px;
+}
+
 #step, #to-breakpoint {
     display: none;
 }
 
-pre {
-    height: 100%;
-}
 
 .controls > button {
     background: none;
@@ -102,4 +150,33 @@ input {
 
 .content {
     padding-left: 17px;
+}
+
+.output > .viewer {
+    overflow-y: auto;
+}
+
+img:hover {
+    cursor: pointer;
+}
+
+#debug {
+    width: 18px;
+}
+
+#run {
+    width: 25px;
+}
+
+#step {
+    padding: 0;
+    width: 25px;
+}
+
+.debug-pointer {
+    background: yellow;
+}
+
+.center-ide {
+    /*width: 1000px;*/
 }
