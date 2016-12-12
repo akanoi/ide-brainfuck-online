@@ -6,3 +6,17 @@ form {
 input {
     min-width: 200px;
 }
+
+.social-nets {
+    padding-left: 140px;
+    padding-bottom: 20px;
+}
+
+.social-nets > img {
+    padding-left: 10px;
+    padding-right: 25px;
+}
+
+img:hover {
+    cursor: pointer;
+}

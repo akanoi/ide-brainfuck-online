@@ -1,10 +1,40 @@
 <% layout('./page') %>
 
 <link rel='stylesheet' href='/css/auth.css'/>
+<script src="https://vk.com/js/api/openapi.js?136" type="text/javascript"></script>
+<script src="scripts/auth/vk.js"></script>
+<script src="scripts/auth/fb.js"></script>
+<script src="scripts/auth/twitter.js"></script>
+<script src="scripts/auth/check-mail.js"></script>
 
+<body onload="init_vk()">
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '928276263940234',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <p class="col-lg-offset-2">Please enter your name and password to sign in.</p>
 
 <form class="form-horizontal login-form" name="login-form">
+    <div class="social-nets" style="">
+        <img src="images/vk.svg" onclick="<%= blocks.action %>_vk()"/>
+        <img src="images/twitter.svg" onclick="<%= blocks.action %>_twitter()"/>
+        <img src="images/facebook.svg" onclick="<%= blocks.action %>_fb()"/>
+    </div>
+
     <div class="form-group">
         <label for="input-username" class="col-lg-2 control-label">Name</label>
 
@@ -12,6 +42,25 @@
             <input name="username" type="text" class="form-control" id="input-username" placeholder="Name">
         </div>
     </div>
+    <%if (blocks.action == 'registration') {%>
+        <div class="form-group">
+            <label for="input-mail" class="col-lg-2 control-label">Mail</label>
+
+            <div class="col-lg-2">
+                <input name="mail" type="text" class="form-control" id="input-mail"
+                       placeholder="example@some.com">
+            </div>
+        </div>
+
+        <div class="form-group code">
+            <label for="input-code" class="col-lg-2 control-label">Code in mail</label>
+
+            <div class="col-lg-2">
+                <input name="code" type="text" class="form-control" id="input-code"
+                       placeholder="12345">
+            </div>
+        </div>
+    <%}%>
     <div class="form-group">
         <label for="input-password" class="col-lg-2 control-label">Password</label>
 
@@ -28,6 +77,7 @@
         </div>
     </div>
 </form>
+</body>
 
 <script>
     $(document.forms['login-form']).on('submit', function () {

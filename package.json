@@ -20,7 +20,8 @@
     "express-session": "~1.14.2",
     "errorhandler": "~1.5.0",
     "winston": "~2.3.0",
-    "angular": "~1.6.0"
+    "angular": "~1.6.0",
+    "nodemailer": "~2.7.0"
   },
   "author": "Aleh Kanoika"
 }
