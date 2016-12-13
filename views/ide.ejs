@@ -21,6 +21,7 @@
                     <img title="Debug" src="/images/debug.svg" id="debug" ng-click="is_debug = true" onclick="debug_toggle();"/>
                     <img title="Step" src="/images/next.svg" id="step" onclick="run_step();"/>
                     <img title="To breakpoint" src="/images/skip.svg" id="to-breakpoint" onclick="run_debug();"/>
+                    <span class="hint">Use @ for breakpoint.</span>
                 </div>
                 <form class="code-area">
                     <textarea id="edit-source" ng-model="file.text" name="source">
@@ -57,9 +58,9 @@
             </div>
         </div>
     </div>
-    <div class="hint">
-        <p>Use @ for breakpoint.</p>
-    </div>
+    <!--<div class="hint">-->
+        <!--<p>Use @ for breakpoint.</p>-->
+    <!--</div>-->
 </body>
 <%} else {%>
 <link rel='stylesheet' href='/css/style.css'/>
