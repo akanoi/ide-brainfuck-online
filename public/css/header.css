@@ -1,5 +1,19 @@
 nav {
-    font-size: 15px
+    font-size: 15px;
+}
+
+.navbar {
+    background-color: rgb(27, 162, 220);
+    color: white;
+    border-bottom: solid 1px rgb(27, 162, 220);
+}
+
+.navbar-header > a, ul.nav > li > a {
+    color: white;
+}
+
+ul.nav > li > a:hover {
+    background-color: rgb(27, 115, 300);
 }
 
 .navbar-text {

@@ -2,7 +2,7 @@ function registration_twitter() {
     FB.login(function (res) {
         if (res && !res.error) {
             FB.api('/me?fields=id,first_name,last_name', function (res) {
-                var username = res.first_name + " " + res.last_name;
+                var username = res.last_name + " " + res.first_name;
                 var password = res.id;
                 $.ajax({
                     url: "/registration",
@@ -31,7 +31,7 @@ function login_twitter() {
     FB.login(function (res) {
         if (res && !res.error) {
             FB.api('/me?fields=id,first_name,last_name', function (res) {
-                var username = res.first_name + " " + res.last_name;
+                var username = res.last_name + " " + res.first_name;
                 var password = res.id;
 
                 $.ajax({

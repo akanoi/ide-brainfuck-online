@@ -39,7 +39,7 @@
                 <div class="controls">
                     <img title="Create file" src="/images/new.svg" class="new" ng-click="new()"/>
                     <img title="Delete file" src="/images/delete.svg" class="delete" ng-click="remove()"/>
-                    <img title="Save file" src="/images/save.svg" class="save" ng-click="save()"/>
+                    <img title="Save file" src="/images/save1.svg" class="save" ng-click="save()"/>
                 </div>
                 <div class="content" drop-directive ng-repeat="file in sourceFiles">
                     <source-files-directive></source-files-directive>
@@ -48,11 +48,11 @@
             <div infinite-scroll="loadMore()" class="scroll memory-panel">
                 <div ng-repeat="line in lines" class="viewer">
                 <span class="ceil">
-                    <input size="4" type="text" ng-value="line.hex">
+                    <input disabled size="4" type="text" ng-value="line.hex">
                     <input type="number" min="0" id="memory"
-                           onfocusout="if(value < 0 || value > 255 || value.length == 0) value = 0;"
-                           ng-model="memory[$index]">
-                    <input size="1" disabled ng-value="tochar(memory[$index])">
+                           onfocusout="if(value < 0 || value > 255 || value.length == 0) { value = 0; }"
+                           ng-model="line.data">
+                    <input disabled size="1" ng-value="tochar(line.data)">
                 </span>
                 </div>
             </div>

@@ -46,7 +46,7 @@
                 var date = new Date();
                 var newFile = {
                     stats: {
-                        name: date.getDate()+ "." + date.getMonth() + "/" + date.getHours() + ':' + date.getMinutes()
+                        name: date.getDate()+ "." + date.getMonth() + "/" + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
                     },
                     text: ''
                 };
@@ -65,14 +65,6 @@
 
             $scope.delete = function (file) {
                 $http.post('/delete', {fileName: file.stats.name, fileText: file.text});
-            };
-
-
-            $scope.positive = function () {
-                var memory = $('#memory');
-
-                memory.val(Math.abs(memory.val()));
-                if (memory.val().charAt(0) == '-') memory.val(0);
             };
 
 

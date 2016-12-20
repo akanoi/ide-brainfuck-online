@@ -10,8 +10,9 @@ app.service('SourceService', function () {
 app.directive("sourceFilesDirective", ['$http', 'SourceService', function ($http, SourceService) {
     return {
         restrict: "AE",
-        template: '<li type="none">' + '<style> .selected { color: blue; } }</style>' +
-        '<button ng-class="{selected : isSelected($index)}"  ng-dblclick="rename(file)" ng-click="selectFile($index);select(file);" class="btn btn-default btn-xs" style="margin: 10px 5px 0px 10px; width: 100px; height: 20px;">{{file.stats.name}}</button><br>' +
+        template: '<li class="li-file" type="none" style="padding-top: 10px">' + '<style> .selected { background-color: #00B7FF; color: white } }</style>' +
+        '<img src="/images/file.png"/>' +
+        '<span ng-class="{selected : isSelected($index)}"  ng-dblclick="rename(file)" ng-click="selectFile($index);select(file);" class="file-a" style="margin: 10px 5px 0px 10px">{{file.stats.name}}</span><br>' +
         '</li>',
 
         link: function (scope, elem) {
